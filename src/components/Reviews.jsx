@@ -25,9 +25,7 @@ const GoogleGIcon = ({ className = "w-5 h-5" }) => (
 );
 
 const Reviews = ({ darkMode = false }) => {
-  const [showAll, setShowAll] = useState(false);
-
-  const visibleReviews = showAll ? googleReviews : googleReviews.slice(0, 6);
+  const visibleReviews = googleReviews.slice(0, 6);
 
   return (
     <section id="reviews" className="py-20 relative overflow-hidden transition-colors duration-500 bg-gradient-to-b from-gray-50 via-white to-gray-50">
@@ -185,17 +183,18 @@ const Reviews = ({ darkMode = false }) => {
           ))}
         </div>
 
-        {/* Show More / Show Less Button */}
-        {googleReviews.length > 6 && (
-          <div className="text-center mt-10">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-8 py-3 rounded-xl font-semibold text-sm transition-all duration-300 border shadow-sm bg-white hover:bg-gray-50 border-gray-300 text-gray-800 hover:border-brand-gold"
-            >
-              {showAll ? 'Show Less Reviews' : `View All ${googleReviews.length} Reviews`}
-            </button>
-          </div>
-        )}
+        {/* View More Reviews Button */}
+        <div className="text-center mt-10">
+          <a
+            href={googleReviewsSummary.writeReviewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-semibold text-sm transition-all duration-300 border shadow-sm bg-white hover:bg-gray-50 border-gray-300 text-gray-800 hover:border-brand-gold hover:text-brand-dark hover:shadow-md active:scale-95"
+          >
+            <span>View More Reviews</span>
+            <ExternalLink className="w-4 h-4 text-gray-500" />
+          </a>
+        </div>
 
       </div>
     </section>
