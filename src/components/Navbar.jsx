@@ -20,6 +20,7 @@ const Navbar = ({ darkMode, onToggleTheme, onNavigateHome }) => {
     { name: 'About', href: '#about' },
     { name: 'Store', href: '#sales' },
     { name: 'Gallery', href: '#gallery' },
+    { name: 'Reviews', href: '#reviews' },
     { name: 'Why Us', href: '#why-us' },
   ];
 

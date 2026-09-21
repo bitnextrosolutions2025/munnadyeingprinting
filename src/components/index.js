@@ -5,6 +5,7 @@ export { default as About } from './About';
 export { default as Sales } from './Sales';
 export { default as Gallery } from './Gallery';
 export { default as WhyChooseUs } from './WhyChooseUs';
+export { default as Reviews } from './Reviews';
 export { default as Contact } from './Contact';
 export { default as ContactBusinessCard } from './ContactBusinessCard';
 export { default as MapSection } from './MapSection';

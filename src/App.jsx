@@ -6,6 +6,7 @@ import {
   Sales,
   Gallery,
   WhyChooseUs,
+  Reviews,
   Contact,
   MapSection,
   Footer,
@@ -65,6 +66,7 @@ function App() {
             onOpenLightbox={(item) => setLightboxItem(item)}
           />
           <WhyChooseUs darkMode={darkMode} />
+          <Reviews darkMode={darkMode} />
           <Contact darkMode={darkMode} />
           <MapSection darkMode={darkMode} />
         </main>
