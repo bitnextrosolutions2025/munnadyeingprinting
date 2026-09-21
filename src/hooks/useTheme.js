@@ -1,31 +1,23 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Custom hook to manage Dark Mode theme preference with localStorage sync
+ * Clean Light Theme Mode permanently enabled for Munna Dyeing Printing
  */
 export const useTheme = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('mdp_theme');
-    return saved !== null ? saved === 'dark' : false;
-  });
+  const [darkMode] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('mdp_theme', darkMode ? 'dark' : 'light');
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
+    try {
+      localStorage.setItem('mdp_theme', 'light');
+    } catch (e) {}
 
-  const toggleTheme = () => {
-    setDarkMode(prev => !prev);
-  };
+    document.documentElement.classList.add('light');
+    document.documentElement.classList.remove('dark');
+  }, []);
 
-  return { darkMode, toggleTheme, setDarkMode };
+  const toggleTheme = () => {};
+
+  return { darkMode: false, toggleTheme, setDarkMode: () => {} };
 };
 
 export default useTheme;

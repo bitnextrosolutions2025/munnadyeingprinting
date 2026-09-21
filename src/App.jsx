@@ -36,8 +36,7 @@ function App() {
       
       {/* Navigation Bar with Locked MDP Emblem + Approved Master Wordmark */}
       <Navbar
-        darkMode={darkMode}
-        onToggleTheme={toggleTheme}
+        darkMode={false}
         onNavigateHome={handleBackToHome}
         onSelectCategory={(cat) => handleOpenCategoryPage(cat)}
       />
