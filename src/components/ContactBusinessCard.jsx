@@ -3,12 +3,14 @@ import { CreditCard, Maximize2, Download, X, Sparkles } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 
 const ContactBusinessCard = ({
-  imagePath = siteConfig.businessCardImage || '/images/business-card.png',
+  imagePath = siteConfig.businessCardImage || '/images/business-card.jpg',
+  downloadPath = siteConfig.businessCardDownload || '/images/business-card.png',
   label = "OUR BUSINESS CARD",
   subtitle = "Keep our contact details handy.",
-  darkMode = true
+  darkMode = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -46,20 +48,29 @@ const ContactBusinessCard = ({
       {/* Interactive Business Card Box */}
       <div
         onClick={() => setIsOpen(true)}
-        className={`group relative w-full rounded-2xl p-2.5 border cursor-pointer overflow-hidden transition-all duration-300 transform hover:-translate-y-1 ${
-          darkMode
-            ? 'bg-brand-surface/70 border-brand-gold/30 hover:border-brand-gold/70 shadow-xl shadow-black/40 hover:shadow-brand-gold/10'
-            : 'bg-brand-cream/80 border-brand-gold/30 hover:border-brand-gold shadow-lg shadow-gray-200/80 hover:shadow-xl'
-        }`}
+        className="group relative w-full rounded-2xl p-2.5 border cursor-pointer overflow-hidden transition-all duration-300 transform hover:-translate-y-1 bg-white border-brand-gold/30 hover:border-brand-gold shadow-md hover:shadow-xl"
         title="Click to view full size business card"
       >
-        {/* Card Frame & Image */}
-        <div className="relative w-full rounded-xl overflow-hidden bg-black/40 flex items-center justify-center">
+        {/* Card Frame & Image with Instant Preload & Aspect Ratio */}
+        <div className="relative w-full aspect-[1670/942] rounded-xl overflow-hidden bg-brand-gold/5 flex items-center justify-center">
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-cream/80 via-white to-brand-cream/80 animate-pulse flex items-center justify-center">
+              <CreditCard className="w-8 h-8 text-brand-gold/40" />
+            </div>
+          )}
+
           <img
             src={imagePath}
             alt="Munna Dyeing Printing Official Business Card"
-            className="w-full h-auto object-contain max-h-[360px] rounded-xl transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-            loading="lazy"
+            width={1670}
+            height={942}
+            className={`w-full h-auto object-contain max-h-[360px] rounded-xl transition-all duration-300 ease-out group-hover:scale-[1.02] ${
+              isLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            onLoad={() => setIsLoaded(true)}
           />
 
           {/* Hover Overlay with Action Pill */}
@@ -134,7 +145,7 @@ const ContactBusinessCard = ({
 
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <a
-                  href={imagePath}
+                  href={downloadPath}
                   download="Munna_Dyeing_Printing_Business_Card.png"
                   className="w-full sm:w-auto py-2.5 px-5 rounded-xl bg-gold-gradient text-brand-dark font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 hover:scale-105 transition-all"
                 >

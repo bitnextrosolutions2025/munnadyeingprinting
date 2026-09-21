@@ -33,7 +33,7 @@ const Reviews = ({ darkMode = false }) => {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Heading with Google Badge */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 border shadow-sm backdrop-blur-md transition-colors bg-white/90 border-brand-gold/30 text-brand-gold">
@@ -46,14 +46,14 @@ const Reviews = ({ darkMode = false }) => {
           </h2>
 
           <p className="max-w-2xl mx-auto text-base sm:text-lg font-light leading-relaxed text-gray-600">
-            Real, authentic experiences shared by boutique designers, saree lovers, and fabric clients on Google Maps.
+            Real, authentic experiences shared by boutique designers, saree lovers, and fabric clients on Google.
           </p>
         </div>
 
         {/* Google Scorecard Banner */}
         <div className="mb-14 p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-md max-w-4xl mx-auto bg-white border-brand-gold/30 shadow-brand-gold/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            
+
             {/* Left Score Block */}
             <div className="flex items-center gap-5">
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center p-3 shrink-0">
