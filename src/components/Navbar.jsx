@@ -45,24 +45,24 @@ const Navbar = ({ darkMode, onToggleTheme, onNavigateHome }) => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-6">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleHomeClick(e, link.href)}
-                className={`px-3 py-2 text-sm font-medium transition-colors relative group ${
+                className={`px-2.5 py-1.5 text-sm font-medium transition-colors relative group whitespace-nowrap ${
                   darkMode ? 'text-gray-300 hover:text-brand-gold' : 'text-gray-700 hover:text-brand-gold-dark'
                 }`}
               >
                 {link.name}
-                <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-brand-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+                <span className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-brand-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
               </a>
             ))}
           </nav>
 
           {/* Action CTAs & Theme Toggle (Desktop) */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2">
             
             {/* Theme Toggle Button */}
             <button
