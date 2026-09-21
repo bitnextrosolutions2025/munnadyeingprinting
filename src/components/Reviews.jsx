@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Star, CheckCircle, ExternalLink, Heart, MessageSquare, ThumbsUp } from 'lucide-react';
-import SectionHeading from './SectionHeading';
-import { googleReviews, googleReviewsSummary, reviewCategories } from '../data/reviewsData';
+import { Star, CheckCircle, ExternalLink, Heart } from 'lucide-react';
+import { googleReviews, googleReviewsSummary } from '../data/reviewsData';
 
 // Official Google G Icon SVG
 const GoogleGIcon = ({ className = "w-5 h-5" }) => (
@@ -25,20 +24,13 @@ const GoogleGIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const Reviews = ({ darkMode = true }) => {
-  const [activeCategory, setActiveCategory] = useState('all');
+const Reviews = ({ darkMode = false }) => {
   const [showAll, setShowAll] = useState(false);
 
-  const filteredReviews = activeCategory === 'all'
-    ? googleReviews
-    : googleReviews.filter(r => r.category === activeCategory);
-
-  const visibleReviews = showAll ? filteredReviews : filteredReviews.slice(0, 6);
+  const visibleReviews = showAll ? googleReviews : googleReviews.slice(0, 6);
 
   return (
-    <section id="reviews" className={`py-20 relative overflow-hidden transition-colors duration-500 ${
-      darkMode ? 'bg-brand-dark/95' : 'bg-gradient-to-b from-gray-50 via-white to-gray-50'
-    }`}>
+    <section id="reviews" className="py-20 relative overflow-hidden transition-colors duration-500 bg-gradient-to-b from-gray-50 via-white to-gray-50">
       {/* Subtle Background Glow Accent */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -46,30 +38,22 @@ const Reviews = ({ darkMode = true }) => {
         
         {/* Section Heading with Google Badge */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 border shadow-sm backdrop-blur-md transition-colors bg-white/80 dark:bg-brand-card/90 border-brand-gold/30 text-brand-gold">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 border shadow-sm backdrop-blur-md transition-colors bg-white/90 border-brand-gold/30 text-brand-gold">
             <GoogleGIcon className="w-4 h-4" />
             <span>Verified Google Reviews</span>
           </div>
 
-          <h2 className={`font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 ${
-            darkMode ? 'text-white' : 'text-gray-900'
-          }`}>
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-gray-900">
             Loved by 148+ Happy Customers
           </h2>
 
-          <p className={`max-w-2xl mx-auto text-base sm:text-lg font-light leading-relaxed ${
-            darkMode ? 'text-gray-300' : 'text-gray-600'
-          }`}>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg font-light leading-relaxed text-gray-600">
             Real, authentic experiences shared by boutique designers, saree lovers, and fabric clients on Google Maps.
           </p>
         </div>
 
         {/* Google Scorecard Banner */}
-        <div className={`mb-12 p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-md max-w-4xl mx-auto ${
-          darkMode
-            ? 'bg-brand-card/70 border-brand-gold/25 shadow-black/40'
-            : 'bg-white border-brand-gold/30 shadow-brand-gold/10'
-        }`}>
+        <div className="mb-14 p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-md max-w-4xl mx-auto bg-white border-brand-gold/30 shadow-brand-gold/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             
             {/* Left Score Block */}
@@ -80,9 +64,7 @@ const Reviews = ({ darkMode = true }) => {
 
               <div>
                 <div className="flex items-center gap-2">
-                  <span className={`font-heading text-4xl sm:text-5xl font-extrabold tracking-tight ${
-                    darkMode ? 'text-brand-gold' : 'text-gray-900'
-                  }`}>
+                  <span className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
                     {googleReviewsSummary.rating}
                   </span>
                   <div className="flex flex-col">
@@ -103,10 +85,10 @@ const Reviews = ({ darkMode = true }) => {
               </div>
             </div>
 
-            {/* Right Action Button (Write a Review only) */}
+            {/* Right Action Button: Links to Google Share Review URL */}
             <div className="flex items-center gap-3 w-full md:w-auto">
               <a
-                href={googleReviewsSummary.googleMapsUrl}
+                href={googleReviewsSummary.writeReviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 shadow-md bg-gradient-to-r from-brand-gold via-amber-400 to-brand-gold text-brand-dark hover:shadow-brand-gold/30 hover:scale-[1.02] active:scale-[0.98]"
@@ -120,50 +102,12 @@ const Reviews = ({ darkMode = true }) => {
           </div>
         </div>
 
-        {/* Review Filter Chips (Google Topics) */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mb-10">
-          {reviewCategories.map((cat) => {
-            const isSelected = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => {
-                  setActiveCategory(cat.id);
-                  setShowAll(false);
-                }}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 border flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-brand-gold text-brand-dark border-brand-gold font-bold shadow-md shadow-brand-gold/20'
-                    : darkMode
-                      ? 'bg-brand-card/60 text-gray-300 border-white/10 hover:border-brand-gold/40 hover:text-white'
-                      : 'bg-white text-gray-700 border-gray-200 hover:border-brand-gold/60 hover:text-gray-900 shadow-sm'
-                }`}
-              >
-                <span>{cat.label}</span>
-                <span className={`text-[11px] px-1.5 py-0.5 rounded-full ${
-                  isSelected
-                    ? 'bg-brand-dark/20 text-brand-dark font-bold'
-                    : darkMode
-                      ? 'bg-white/10 text-gray-400'
-                      : 'bg-gray-100 text-gray-600'
-                }`}>
-                  {cat.count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
         {/* Reviews Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visibleReviews.map((review) => (
             <div
               key={review.id}
-              className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 ${
-                darkMode
-                  ? 'bg-brand-card/80 border-brand-gold/20 hover:border-brand-gold/50 shadow-black/30'
-                  : 'bg-white border-gray-200/90 hover:border-brand-gold/40 shadow-sm'
-              }`}
+              className="p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 bg-white border-gray-200/90 hover:border-brand-gold/40 shadow-sm"
             >
               <div>
                 {/* Reviewer Header */}
@@ -176,9 +120,7 @@ const Reviews = ({ darkMode = true }) => {
 
                     {/* Name and Guide Badge */}
                     <div>
-                      <h4 className={`font-semibold text-sm sm:text-base leading-snug line-clamp-1 ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}>
+                      <h4 className="font-semibold text-sm sm:text-base leading-snug line-clamp-1 text-gray-900">
                         {review.name}
                       </h4>
                       <div className="flex items-center gap-1.5 flex-wrap">
@@ -186,8 +128,12 @@ const Reviews = ({ darkMode = true }) => {
                           <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
                             ★ Local Guide
                           </span>
+                        ) : review.userType === 'Featured Google Review' ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                            ★ Featured Review
+                          </span>
                         ) : (
-                          <span className={`text-[11px] font-medium ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <span className="text-[11px] font-medium text-gray-500">
                             {review.badgeDetails || 'Verified Customer'}
                           </span>
                         )}
@@ -209,37 +155,20 @@ const Reviews = ({ darkMode = true }) => {
                     ))}
                   </div>
 
-                  <span className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <span className="text-xs text-gray-500">
                     {review.date}
                   </span>
                 </div>
 
-                {/* Tag Pill */}
-                {review.tag && (
-                  <div className="mb-3">
-                    <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-lg border ${
-                      darkMode
-                        ? 'bg-brand-gold/10 text-brand-gold border-brand-gold/30'
-                        : 'bg-amber-50 text-amber-900 border-amber-200'
-                    }`}>
-                      {review.tag}
-                    </span>
-                  </div>
-                )}
-
                 {/* Review Comment Quote */}
-                <p className={`text-sm leading-relaxed font-light mb-4 italic ${
-                  darkMode ? 'text-gray-200' : 'text-gray-700'
-                }`}>
+                <p className="text-sm leading-relaxed font-light mb-4 italic text-gray-700">
                   "{review.comment}"
                 </p>
               </div>
 
               {/* Card Footer: Verified Badge & Likes */}
-              <div className={`pt-3 border-t flex items-center justify-between text-xs ${
-                darkMode ? 'border-white/10 text-gray-400' : 'border-gray-100 text-gray-500'
-              }`}>
-                <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-medium">
+              <div className="pt-3 border-t flex items-center justify-between text-xs border-gray-100 text-gray-500">
+                <div className="flex items-center gap-1.5 text-emerald-600 font-medium">
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Google Verified</span>
                 </div>
@@ -257,17 +186,13 @@ const Reviews = ({ darkMode = true }) => {
         </div>
 
         {/* Show More / Show Less Button */}
-        {filteredReviews.length > 6 && (
+        {googleReviews.length > 6 && (
           <div className="text-center mt-10">
             <button
               onClick={() => setShowAll(!showAll)}
-              className={`px-8 py-3 rounded-xl font-semibold text-sm transition-all duration-300 border shadow-sm ${
-                darkMode
-                  ? 'bg-brand-card hover:bg-brand-gold/10 border-brand-gold/40 text-brand-gold hover:border-brand-gold'
-                  : 'bg-white hover:bg-gray-50 border-gray-300 text-gray-800 hover:border-brand-gold'
-              }`}
+              className="px-8 py-3 rounded-xl font-semibold text-sm transition-all duration-300 border shadow-sm bg-white hover:bg-gray-50 border-gray-300 text-gray-800 hover:border-brand-gold"
             >
-              {showAll ? 'Show Less Reviews' : `View All ${filteredReviews.length} Reviews`}
+              {showAll ? 'Show Less Reviews' : `View All ${googleReviews.length} Reviews`}
             </button>
           </div>
         )}

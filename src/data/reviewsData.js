@@ -9,7 +9,7 @@ export const googleReviewsSummary = {
   totalReviews: 148,
   webReviewsCount: 151,
   googleMapsUrl: "https://www.google.com/maps/place/Munna+printing/@17.5153341,78.3910479,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb910950f4d401:0xd650199a9c0f1fe!8m2!3d17.5153341!4d78.3910479!16s%2Fg%2F11vwn9f0dc?hl=en-GB&entry=ttu",
-  writeReviewUrl: "https://www.google.com/maps/place/Munna+printing/@17.5153341,78.3910479,17z/data=!3m1!4b1!4m6!3m5!1s0x3bcb910950f4d401:0xd650199a9c0f1fe!8m2!3d17.5153341!4d78.3910479!16s%2Fg%2F11vwn9f0dc?hl=en-GB&entry=ttu#reviews"
+  writeReviewUrl: "https://share.google/AGDP4l6txURpETuwz"
 };
 
 export const reviewCategories = [
