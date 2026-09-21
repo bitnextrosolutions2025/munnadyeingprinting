@@ -91,46 +91,28 @@ const Reviews = ({ darkMode = true }) => {
                         <Star key={i} className="w-5 h-5 fill-current" />
                       ))}
                     </div>
-                    <span className={`text-xs font-semibold mt-0.5 ${
-                      darkMode ? 'text-gray-400' : 'text-gray-500'
-                    }`}>
-                      Based on {googleReviewsSummary.totalReviews} Google Ratings
+                    <span className="text-xs font-semibold mt-0.5 text-gray-600">
+                      Based on {googleReviewsSummary.totalReviews} Google Ratings & {googleReviewsSummary.webReviewsCount} Web Reviews
                     </span>
                   </div>
                 </div>
-                <p className={`text-xs sm:text-sm font-medium mt-1 flex items-center gap-1.5 ${
-                  darkMode ? 'text-emerald-400' : 'text-emerald-700'
-                }`}>
+                <p className="text-xs sm:text-sm font-medium mt-1 flex items-center gap-1.5 text-emerald-700">
                   <CheckCircle className="w-4 h-4 shrink-0" />
                   <span>100% Genuine, Verified Business Profile</span>
                 </p>
               </div>
             </div>
 
-            {/* Right Action Buttons */}
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full md:w-auto">
+            {/* Right Action Button (Write a Review only) */}
+            <div className="flex items-center gap-3 w-full md:w-auto">
               <a
                 href={googleReviewsSummary.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-300 shadow-md bg-gradient-to-r from-brand-gold via-amber-400 to-brand-gold text-brand-dark hover:shadow-brand-gold/30 hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 shadow-md bg-gradient-to-r from-brand-gold via-amber-400 to-brand-gold text-brand-dark hover:shadow-brand-gold/30 hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Star className="w-4 h-4 fill-brand-dark" />
-                <span>Write a Review</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-
-              <a
-                href={googleReviewsSummary.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold border transition-all duration-300 ${
-                  darkMode
-                    ? 'border-brand-gold/40 text-brand-gold hover:bg-brand-gold/10'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                <span>View on Maps</span>
+                <span>Write a Review on Google</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
