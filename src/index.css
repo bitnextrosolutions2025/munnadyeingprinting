@@ -226,4 +226,30 @@
   .animate-hero-progress {
     animation: none !important;
   }
+}
+
+/* Infinite Review Marquee Animation */
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 42s linear infinite;
+  will-change: transform;
+}
+
+.marquee-pause-on-hover:hover .animate-marquee-infinite {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
 }

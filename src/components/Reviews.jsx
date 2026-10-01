@@ -25,7 +25,8 @@ const GoogleGIcon = ({ className = "w-5 h-5" }) => (
 );
 
 const Reviews = ({ darkMode = false }) => {
-  const visibleReviews = googleReviews.slice(0, 6);
+  // Duplicate reviews for seamless, infinite continuous loop
+  const marqueeReviews = [...googleReviews, ...googleReviews];
 
   return (
     <section id="reviews" className="py-20 relative overflow-hidden transition-colors duration-500 bg-gradient-to-b from-gray-50 via-white to-gray-50">
@@ -100,12 +101,15 @@ const Reviews = ({ darkMode = false }) => {
           </div>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleReviews.map((review) => (
+      </div>
+
+      {/* Full-Width Continuous Auto-Playing Marquee Track */}
+      <div className="w-full overflow-hidden marquee-mask marquee-pause-on-hover py-4 relative z-10">
+        <div className="animate-marquee-infinite flex gap-6 items-stretch pl-6">
+          {marqueeReviews.map((review, index) => (
             <div
-              key={review.id}
-              className="p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 bg-white border-gray-200/90 hover:border-brand-gold/40 shadow-sm"
+              key={`${review.id}-${index}`}
+              className="w-[310px] sm:w-[350px] md:w-[380px] shrink-0 p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 bg-white border-gray-200/90 hover:border-brand-gold/50 shadow-sm"
             >
               <div>
                 {/* Reviewer Header */}
@@ -182,7 +186,9 @@ const Reviews = ({ darkMode = false }) => {
             </div>
           ))}
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* View More Reviews Button */}
         <div className="text-center mt-10">
           <a
