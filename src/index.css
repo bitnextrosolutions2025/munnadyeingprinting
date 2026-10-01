@@ -252,4 +252,47 @@
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+/* Golden Shimmer Rating Number Effect */
+@keyframes shimmerRating {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer-rating {
+  background: linear-gradient(
+    115deg,
+    #0f172a 0%,
+    #0f172a 25%,
+    #d97706 42%,
+    #fbbf24 50%,
+    #d97706 58%,
+    #0f172a 75%,
+    #0f172a 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerRating 4s ease-in-out infinite;
+}
+
+@keyframes starGlowBounce {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4));
+  }
+  50% {
+    transform: scale(1.07);
+    filter: drop-shadow(0 0 7px rgba(245, 158, 11, 0.75));
+  }
+}
+
+.animate-star-glow {
+  animation: starGlowBounce 3s ease-in-out infinite;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Star, CheckCircle, ExternalLink, Heart } from 'lucide-react';
 import { googleReviews, googleReviewsSummary } from '../data/reviewsData';
 
@@ -25,6 +25,47 @@ const GoogleGIcon = ({ className = "w-5 h-5" }) => (
 );
 
 const Reviews = ({ darkMode = false }) => {
+  const [displayScore, setDisplayScore] = useState('0.0');
+  const scorecardRef = useRef(null);
+
+  // Smooth ease-out count-up animation when user scrolls into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          const target = googleReviewsSummary.rating;
+          const duration = 1500; // ms
+          const startTime = performance.now();
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic curve for natural decelerating motion
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = (easeOut * target).toFixed(1);
+            setDisplayScore(current);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setDisplayScore(target.toFixed(1));
+            }
+          };
+
+          requestAnimationFrame(animate);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (scorecardRef.current) {
+      observer.observe(scorecardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   // Duplicate reviews for seamless, infinite continuous loop
   const marqueeReviews = [...googleReviews, ...googleReviews];
 
@@ -51,34 +92,44 @@ const Reviews = ({ darkMode = false }) => {
           </p>
         </div>
 
-        {/* Google Scorecard Banner */}
-        <div className="mb-14 p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-md max-w-4xl mx-auto bg-white border-brand-gold/30 shadow-brand-gold/10">
+        {/* Google Scorecard Banner with IntersectionObserver Ref */}
+        <div
+          ref={scorecardRef}
+          className="mb-14 p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-md max-w-4xl mx-auto bg-white border-brand-gold/30 shadow-brand-gold/10 transition-all hover:border-brand-gold/50"
+        >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
-            {/* Left Score Block */}
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center p-3 shrink-0">
-                <GoogleGIcon className="w-10 h-10 sm:w-12 sm:h-12" />
+            {/* Left Score Block with Radiant Animation & Aura */}
+            <div className="flex items-center gap-5 sm:gap-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center p-3 shrink-0 relative group">
+                <GoogleGIcon className="w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110" />
               </div>
 
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-heading text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                    {googleReviewsSummary.rating}
-                  </span>
+                <div className="flex items-center gap-3 sm:gap-4">
+                  {/* Dynamic Shimmer 4.9 Score with Warm Halo Glow */}
+                  <div className="relative group inline-block">
+                    {/* Ambient Gold Aura */}
+                    <div className="absolute -inset-2 bg-gradient-to-r from-amber-400/35 via-brand-gold/25 to-amber-500/35 rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none animate-pulse"></div>
+
+                    <span className="relative z-10 font-heading text-5xl sm:text-6xl font-extrabold tracking-tight animate-shimmer-rating select-none drop-shadow-sm inline-block transition-transform duration-300 group-hover:scale-105">
+                      {displayScore}
+                    </span>
+                  </div>
+
                   <div className="flex flex-col">
-                    <div className="flex text-amber-400">
+                    <div className="flex text-amber-400 animate-star-glow">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-current" />
+                        <Star key={i} className="w-5 h-5 sm:w-5 sm:h-5 fill-current transition-transform hover:scale-125 duration-200" />
                       ))}
                     </div>
-                    <span className="text-xs font-semibold mt-0.5 text-gray-600">
+                    <span className="text-xs font-semibold mt-1 text-gray-600">
                       Based on {googleReviewsSummary.totalReviews} Google Ratings & {googleReviewsSummary.webReviewsCount} Web Reviews
                     </span>
                   </div>
                 </div>
-                <p className="text-xs sm:text-sm font-medium mt-1 flex items-center gap-1.5 text-emerald-700">
-                  <CheckCircle className="w-4 h-4 shrink-0" />
+                <p className="text-xs sm:text-sm font-medium mt-1.5 flex items-center gap-1.5 text-emerald-700">
+                  <CheckCircle className="w-4 h-4 shrink-0 text-emerald-600" />
                   <span>100% Genuine, Verified Business Profile</span>
                 </p>
               </div>
