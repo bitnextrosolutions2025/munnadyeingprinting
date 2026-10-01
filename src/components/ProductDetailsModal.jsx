@@ -38,8 +38,8 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
       {/* Backdrop click listener */}
       <div className="absolute inset-0" onClick={onClose}></div>
 
-      {/* Centered Modal Card Box (Flex column on mobile, Grid on desktop) */}
-      <div className={`relative z-10 w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col md:grid md:grid-cols-12 my-auto h-[92dvh] max-h-[calc(100dvh-24px)] md:h-auto md:max-h-[85vh] ${
+      {/* Centered Modal Card Box (Flex column on mobile, Flex row on desktop with pinned action bar) */}
+      <div className={`relative z-10 w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto h-[92dvh] max-h-[640px] md:h-[84vh] md:max-h-[600px] ${
         darkMode ? 'bg-brand-card border-brand-gold/40 text-gray-200' : 'bg-white border-brand-gold/40 text-gray-900'
       }`}>
         
@@ -54,9 +54,9 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
           <X className="w-5 h-5 stroke-[2.5]" />
         </button>
 
-        {/* Product Image & Gallery Thumbnails Section */}
-        <div className="shrink-0 max-h-[36vh] sm:max-h-[40vh] md:max-h-none md:col-span-6 bg-black flex flex-col justify-between relative overflow-hidden group">
-          <div className="relative w-full flex-1 min-h-[180px] sm:min-h-[220px] md:min-h-[300px] flex items-center justify-center overflow-hidden">
+        {/* Left Side: Product Image & Gallery Thumbnails */}
+        <div className="w-full md:w-1/2 h-[220px] sm:h-[260px] md:h-full shrink-0 bg-black flex flex-col justify-between relative overflow-hidden group">
+          <div className="relative w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden">
             <img
               src={productImages[activeImgIndex]}
               alt={product.name}
@@ -91,12 +91,12 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
 
           {/* Multiple Image Thumbnails Bar */}
           {productImages.length > 1 && (
-            <div className="p-2 sm:p-3 bg-brand-dark/90 border-t border-brand-gold/20 flex items-center justify-center gap-2 z-10 shrink-0">
+            <div className="p-2 sm:p-2.5 bg-brand-dark/90 border-t border-brand-gold/20 flex items-center justify-center gap-2 z-10 shrink-0">
               {productImages.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImgIndex(idx)}
-                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-lg overflow-hidden border-2 transition-all ${
                     activeImgIndex === idx ? 'border-brand-gold scale-105 shadow-md' : 'border-gray-700 opacity-60 hover:opacity-100'
                   }`}
                 >
@@ -107,11 +107,13 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
           )}
         </div>
 
-        {/* Product Details & Scrollable Content Section */}
-        <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 md:p-8 flex flex-col justify-between space-y-4 sm:space-y-6 md:col-span-6">
-          <div className="space-y-3 sm:space-y-4">
+        {/* Right Side: Product Details & Pinned Bottom Action Buttons */}
+        <div className="w-full md:w-1/2 flex-1 min-h-0 h-full flex flex-col bg-inherit">
+          
+          {/* Scrollable details body */}
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
             {/* Category & Status */}
-            <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-brand-gold pr-10 sm:pr-12">
+            <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-brand-gold pr-10">
               <span>{product.category}</span>
               <span className="flex items-center gap-1 text-emerald-500 font-bold shrink-0">
                 <CheckCircle className="w-3.5 h-3.5" />
@@ -120,19 +122,19 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
             </div>
 
             {/* Title */}
-            <h3 className={`font-heading text-xl sm:text-2xl md:text-3xl font-bold leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className={`font-heading text-lg sm:text-xl md:text-2xl font-bold leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               {product.name}
             </h3>
 
             {/* Pricing Tag */}
             <div>
               {product.showPrice ? (
-                <div className="inline-flex items-baseline gap-1 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-gold-gradient text-brand-dark font-heading font-extrabold text-xl sm:text-2xl shadow-md">
+                <div className="inline-flex items-baseline gap-1 px-3 py-1.5 rounded-xl bg-gold-gradient text-brand-dark font-heading font-extrabold text-lg sm:text-xl shadow-md">
                   <span>₹{product.price}</span>
                   <span className="text-xs font-semibold font-body lowercase">/ {product.priceUnit || 'meter'}</span>
                 </div>
               ) : (
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-bold text-xs sm:text-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-bold text-xs sm:text-sm">
                   <span>Contact for Wholesale Pricing</span>
                 </div>
               )}
@@ -147,19 +149,21 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
             <SpecificationGrid product={product} darkMode={darkMode} />
 
             {/* In-House Guarantee Line */}
-            <div className="flex items-center gap-2 text-xs text-gray-400 pt-1">
-              <ShieldCheck className="w-4 h-4 text-brand-gold shrink-0" />
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs text-gray-400 pt-0.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-gold shrink-0" />
               <span>Direct Manufacturing & Color Fastness Assured</span>
             </div>
           </div>
 
-          {/* Sticky/Bottom CTA Action Buttons Container */}
-          <div className="space-y-2.5 sm:space-y-3 pt-3 sm:pt-4 border-t border-brand-gold/20 shrink-0 pb-[max(4px,env(safe-area-inset-bottom))]">
+          {/* Pinned Bottom CTA Action Buttons Container - Always 100% visible */}
+          <div className={`p-3 sm:p-4 md:px-6 md:py-3.5 border-t shrink-0 space-y-2 z-10 ${
+            darkMode ? 'bg-brand-card/95 border-brand-gold/20' : 'bg-white/95 border-brand-gold/30'
+          }`}>
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 sm:py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+              className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
             >
               <MessageSquare className="w-4 h-4" />
               <span>ORDER ON WHATSAPP</span>
@@ -168,11 +172,11 @@ const ProductDetailsModal = ({ product, onClose, darkMode = true }) => {
 
             <a
               href={`tel:${siteConfig.primaryPhone.replace(/\s+/g, '')}`}
-              className={`w-full py-2 sm:py-2.5 px-4 rounded-xl border font-semibold text-xs text-center flex items-center justify-center gap-2 transition-all ${
-                darkMode ? 'bg-brand-surface border-brand-gold/30 text-gray-200 hover:text-brand-gold' : 'bg-gray-100 border-gray-300 text-gray-800'
+              className={`w-full py-2 px-4 rounded-xl border font-semibold text-xs text-center flex items-center justify-center gap-2 transition-all ${
+                darkMode ? 'bg-brand-surface border-brand-gold/30 text-gray-200 hover:text-brand-gold' : 'bg-gray-100 border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" />
               <span>Call Owner (+91 {siteConfig.primaryPhone})</span>
             </a>
           </div>

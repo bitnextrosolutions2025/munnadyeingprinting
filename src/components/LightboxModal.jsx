@@ -32,8 +32,8 @@ const LightboxModal = ({ item, onClose, darkMode = true }) => {
       {/* Backdrop click listener */}
       <div className="absolute inset-0" onClick={onClose}></div>
 
-      {/* Centered Modal Card: Flex column on mobile, Grid on desktop */}
-      <div className={`relative z-10 w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col md:grid md:grid-cols-12 h-[92dvh] max-h-[calc(100dvh-24px)] md:h-auto md:max-h-[85vh] ${
+      {/* Centered Modal Card: Flex column on mobile, Flex row on desktop */}
+      <div className={`relative z-10 w-full max-w-4xl rounded-2xl border shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto h-[92dvh] max-h-[640px] md:h-[84vh] md:max-h-[600px] ${
         darkMode ? 'bg-brand-card border-brand-gold/40 text-gray-200' : 'bg-white border-brand-gold/40 text-gray-900'
       }`}>
         
@@ -48,8 +48,8 @@ const LightboxModal = ({ item, onClose, darkMode = true }) => {
           <X className="w-5 h-5 stroke-[2.5]" />
         </button>
 
-        {/* Top/Left: Image View with constrained height on mobile */}
-        <div className="shrink-0 max-h-[35vh] sm:max-h-[40vh] md:max-h-[80vh] md:col-span-7 bg-black flex items-center justify-center relative overflow-hidden">
+        {/* Top/Left: Image View */}
+        <div className="w-full md:w-7/12 h-[220px] sm:h-[260px] md:h-full shrink-0 bg-black flex items-center justify-center relative overflow-hidden">
           <img
             src={item.image}
             alt={item.title}
@@ -57,14 +57,14 @@ const LightboxModal = ({ item, onClose, darkMode = true }) => {
           />
         </div>
 
-        {/* Bottom/Right: Details & Sticky Actions */}
-        <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 md:p-8 flex flex-col justify-between space-y-4 md:col-span-5">
-          <div className="space-y-3">
+        {/* Bottom/Right: Details & Pinned Actions */}
+        <div className="w-full md:w-5/12 flex-1 min-h-0 h-full flex flex-col bg-inherit">
+          <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 md:p-6 space-y-3">
             <span className="inline-block px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-semibold uppercase tracking-wider">
               {item.category}
             </span>
 
-            <h3 className={`font-heading text-xl sm:text-2xl md:text-3xl font-bold leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className={`font-heading text-lg sm:text-xl md:text-2xl font-bold leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
               {item.title}
             </h3>
 
@@ -72,20 +72,22 @@ const LightboxModal = ({ item, onClose, darkMode = true }) => {
               {item.description}
             </p>
 
-            <div className={`mt-4 pt-3 border-t space-y-1.5 text-[11px] sm:text-xs ${darkMode ? 'border-brand-surface text-gray-400' : 'border-gray-200 text-gray-600'}`}>
+            <div className={`mt-3 pt-3 border-t space-y-1.5 text-[11px] sm:text-xs ${darkMode ? 'border-brand-surface text-gray-400' : 'border-gray-200 text-gray-600'}`}>
               <p>• Traditional Indian Textile Technique</p>
               <p>• Custom colors & fabric specifications available</p>
               <p>• Own manufacturing in Nizampet, Hyderabad</p>
             </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className={`space-y-2 sm:space-y-2.5 pt-3 sm:pt-4 border-t shrink-0 pb-[max(4px,env(safe-area-inset-bottom))] ${darkMode ? 'border-brand-surface' : 'border-gray-200'}`}>
+          {/* Pinned Action CTAs - Always 100% visible */}
+          <div className={`p-3 sm:p-4 border-t shrink-0 space-y-2 z-10 ${
+            darkMode ? 'bg-brand-card/95 border-brand-surface' : 'bg-white/95 border-gray-200'
+          }`}>
             <a
               href={`https://wa.me/${siteConfig.whatsappPhone}?text=Hi,%20I%20saw%20${encodeURIComponent(item.title)}%20in%20your%20gallery%20and%20want%20to%20inquire.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+              className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
             >
               <MessageSquare className="w-4 h-4" />
               <span>Inquire on WhatsApp</span>
@@ -94,7 +96,7 @@ const LightboxModal = ({ item, onClose, darkMode = true }) => {
             <a
               href="#contact"
               onClick={onClose}
-              className={`w-full py-2 sm:py-2.5 px-4 rounded-xl border font-semibold text-xs text-center block transition-all ${
+              className={`w-full py-2 px-4 rounded-xl border font-semibold text-xs text-center block transition-all ${
                 darkMode ? 'bg-brand-surface border-brand-gold/30 text-gray-200 hover:text-brand-gold' : 'bg-gray-100 border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
