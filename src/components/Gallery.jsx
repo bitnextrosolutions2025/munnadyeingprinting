@@ -43,44 +43,55 @@ const Gallery = ({ darkMode = true, onOpenLightbox }) => {
           ))}
         </div>
 
-        {/* Asymmetric Masonry-style Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item) => (
+        {/* Gallery Cards Container: Mobile Sticky Stacking Deck + Desktop Responsive Grid */}
+        <div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6">
+          {filteredItems.map((item, index) => (
             <div
               key={item.id}
               onClick={() => onOpenLightbox(item)}
-              className={`group relative rounded-2xl overflow-hidden border cursor-pointer hover:border-brand-gold hover:shadow-2xl transition-all duration-500 ${darkMode ? 'border-brand-gold/20 bg-brand-card' : 'border-brand-gold/30 bg-white shadow-sm'
-                }`}
+              style={{
+                zIndex: index + 1,
+              }}
+              className={`group relative rounded-3xl overflow-hidden border cursor-pointer hover:border-brand-gold hover:shadow-2xl transition-all duration-500
+                sticky md:static top-[74px] sm:top-[82px] md:top-auto mb-10 sm:mb-14 md:mb-0
+                shadow-2xl md:shadow-sm
+                ${darkMode ? 'border-brand-gold/30 bg-brand-card shadow-black/80' : 'border-brand-gold/40 bg-white shadow-gray-400/30'}
+              `}
             >
               {/* Image Frame */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-brand-surface">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/3] overflow-hidden bg-brand-surface">
                 <img
                   src={item.image}
                   alt={item.title}
-                  loading="lazy"
+                  loading={index < 3 ? 'eager' : 'lazy'}
                   className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
                 />
 
-                {/* Gradient Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/30 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300"></div>
+                {/* Subtle Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent opacity-75 group-hover:opacity-90 transition-opacity duration-300"></div>
 
-                {/* Top Category Badge */}
-                <div className="absolute top-4 left-4 z-10">
-                  <span className="px-3 py-1 rounded-full bg-brand-dark/90 border border-brand-gold/30 text-brand-gold text-[11px] font-semibold tracking-wider uppercase backdrop-blur-sm">
+                {/* Top Bar: Category Badge (Left) + Mobile Stack Index Counter (Right) */}
+                <div className="absolute top-3.5 left-3.5 right-3.5 sm:top-4 sm:left-4 sm:right-4 z-10 flex items-center justify-between pointer-events-none">
+                  <span className="px-3 py-1 rounded-full bg-brand-dark/90 border border-brand-gold/40 text-brand-gold text-[11px] font-semibold tracking-wider uppercase backdrop-blur-md shadow-md">
                     {item.category}
+                  </span>
+
+                  {/* Mobile Stacking Card Counter */}
+                  <span className="md:hidden px-2.5 py-1 rounded-full bg-black/60 border border-white/20 text-white/90 text-[10px] font-mono font-bold tracking-widest backdrop-blur-md">
+                    {String(index + 1).padStart(2, '0')} / {String(filteredItems.length).padStart(2, '0')}
                   </span>
                 </div>
 
                 {/* Center Expand Icon */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none">
                   <div className="w-12 h-12 rounded-full bg-brand-gold/90 text-brand-dark flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
                     <Eye className="w-6 h-6" />
                   </div>
                 </div>
 
                 {/* Bottom Title Info */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 z-10 transform group-hover:translate-y-0 transition-transform">
-                  <h3 className="font-heading text-xl font-bold text-white group-hover:text-brand-gold transition-colors">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 z-10">
+                  <h3 className="font-heading text-lg sm:text-xl font-bold text-white group-hover:text-brand-gold transition-colors leading-snug">
                     {item.title}
                   </h3>
                   <p className="text-xs text-gray-300 mt-1 line-clamp-2 font-light">
