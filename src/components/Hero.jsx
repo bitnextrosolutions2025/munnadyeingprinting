@@ -97,129 +97,119 @@ const Hero = ({ darkMode = true }) => {
     <section
       id="hero"
       aria-label="Hero Carousel Showcase"
-      className="relative pt-20 sm:pt-24 pb-6 lg:pb-8 overflow-hidden select-none"
+      className="relative pt-[62px] sm:pt-[70px] overflow-hidden select-none bg-brand-dark"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Full-Width Cinematic Viewport (Edge-to-Edge) */}
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full h-[420px] min-[380px]:h-[460px] sm:h-[520px] md:h-[580px] lg:h-[640px] xl:h-[700px] overflow-hidden bg-brand-dark"
+      >
+        {heroSlides.map((slide, index) => {
+          const isActive = index === currentSlide;
+          const isExiting = index === prevSlide;
 
-        {/* Main Full-Width Cinematic Frame */}
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          className={`relative w-full rounded-3xl overflow-hidden border shadow-2xl transition-colors duration-500 ${darkMode
-              ? 'border-brand-gold/30 bg-brand-card shadow-black/80'
-              : 'border-brand-gold/40 bg-brand-cream shadow-gray-300/80'
-            }`}
-        >
+          let zIndex = 'z-0';
+          let opacityClass = 'opacity-0 pointer-events-none';
 
-          {/* Background Crossfade Image Container - Compact Cinematic Viewport */}
-          <div className="relative w-full h-[350px] min-[380px]:h-[360px] md:h-[420px] lg:h-[470px] xl:h-[500px] overflow-hidden bg-brand-dark">
-            {heroSlides.map((slide, index) => {
-              const isActive = index === currentSlide;
-              const isExiting = index === prevSlide;
+          if (isActive) {
+            zIndex = 'z-20';
+            opacityClass = 'opacity-100';
+          } else if (isExiting) {
+            zIndex = 'z-10';
+            opacityClass = 'opacity-100';
+          }
 
-              let zIndex = 'z-0';
-              let opacityClass = 'opacity-0 pointer-events-none';
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-900 ease-in-out ${zIndex} ${opacityClass}`}
+              aria-hidden={!isActive}
+            >
+              <img
+                src={slide.image}
+                alt={slide.alt}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className={`w-full h-full object-cover object-[center_35%] sm:object-center ${isActive ? 'animate-ken-burns' : ''
+                  }`}
+              />
 
-              if (isActive) {
-                zIndex = 'z-20';
-                opacityClass = 'opacity-100';
-              } else if (isExiting) {
-                zIndex = 'z-10';
-                opacityClass = 'opacity-100';
-              }
+              {/* Luxury Cinematic Gradient Overlays: Top navbar transition + Bottom control contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
+            </div>
+          );
+        })}
 
-              return (
-                <div
-                  key={slide.id}
-                  className={`absolute inset-0 transition-opacity duration-900 ease-in-out ${zIndex} ${opacityClass}`}
-                  aria-hidden={!isActive}
-                >
-                  <img
-                    src={slide.image}
-                    alt={slide.alt}
-                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    className={`w-full h-full object-cover object-[center_35%] sm:object-center ${isActive ? 'animate-ken-burns' : ''
+        {/* Bottom Floating Bar: Slide Indicator, Minimal Separate CTA, and Chevrons */}
+        <div className="absolute inset-x-0 bottom-0 z-30 pointer-events-none">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 flex flex-wrap items-center justify-between gap-3">
+
+            {/* Left: Slide Counter & Dynamic Progress Bar */}
+            <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto bg-black/50 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-lg">
+              {/* Clickable Slide Pills */}
+              <div className="flex items-center gap-1.5">
+                {heroSlides.map((slide, idx) => (
+                  <button
+                    key={slide.id}
+                    onClick={() => goToSlide(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide
+                        ? 'w-6 sm:w-8 bg-brand-gold'
+                        : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
+                      }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* 01 / 05 Counter & Progress Bar */}
+              <div className="flex flex-col gap-1 pl-1">
+                <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-brand-gold">
+                  0{currentSlide + 1} <span className="text-white/40">/</span> 0{totalSlides}
+                </span>
+                {/* Animated Progress Bar */}
+                <div className="w-14 sm:w-20 h-0.5 bg-white/25 rounded-full overflow-hidden">
+                  <div
+                    key={progressKey}
+                    className={`h-full bg-brand-gold rounded-full animate-hero-progress ${isHovered ? 'paused-animation' : ''
                       }`}
                   />
-
-                  {/* Subtle Bottom Vignette for Control Legibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
-                </div>
-              );
-            })}
-
-            {/* Bottom Floating Bar: Slide Indicator, Minimal Separate CTA, and Chevrons */}
-            <div className="absolute inset-x-0 bottom-0 z-30 p-3 sm:p-5 lg:p-6 flex flex-wrap items-center justify-between gap-3 pointer-events-none">
-
-              {/* Left: Slide Counter & Dynamic Progress Bar */}
-              <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto bg-black/40 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none px-3 py-1.5 sm:p-0 rounded-full sm:rounded-none border border-white/10 sm:border-none">
-                {/* Clickable Slide Pills */}
-                <div className="flex items-center gap-1.5">
-                  {heroSlides.map((slide, idx) => (
-                    <button
-                      key={slide.id}
-                      onClick={() => goToSlide(idx)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide
-                          ? 'w-6 sm:w-8 bg-brand-gold'
-                          : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
-                        }`}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-
-                {/* 01 / 03 Counter & Progress Bar */}
-                <div className="flex flex-col gap-1 pl-1">
-                  <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-brand-gold">
-                    0{currentSlide + 1} <span className="text-white/40">/</span> 0{totalSlides}
-                  </span>
-                  {/* Animated Progress Bar */}
-                  <div className="w-14 sm:w-20 h-0.5 bg-white/25 rounded-full overflow-hidden">
-                    <div
-                      key={progressKey}
-                      className={`h-full bg-brand-gold rounded-full animate-hero-progress ${isHovered ? 'paused-animation' : ''
-                        }`}
-                    />
-                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Center / Action: Minimal Standalone CTA */}
-              <div className="pointer-events-auto">
-                <a
-                  href="#sales"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gold-gradient text-brand-dark font-bold text-xs uppercase tracking-wider shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-brand-gold/25"
-                >
-                  <span>Explore Fabrics</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
+            {/* Center / Action: Minimal Standalone CTA */}
+            <div className="pointer-events-auto">
+              <a
+                href="#sales"
+                className="inline-flex items-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 rounded-full bg-gold-gradient text-brand-dark font-bold text-xs uppercase tracking-wider shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-brand-gold/40 border border-brand-gold/30"
+              >
+                <span>Explore Fabrics</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
 
-              {/* Right: Minimal Circular Chevron Buttons */}
-              <div className="flex items-center gap-2 pointer-events-auto">
-                <button
-                  onClick={handlePrev}
-                  aria-label="Previous Slide"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-brand-gold"
-                >
-                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  aria-label="Next Slide"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-brand-gold"
-                >
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-              </div>
-
+            {/* Right: Minimal Circular Chevron Buttons */}
+            <div className="flex items-center gap-2 pointer-events-auto">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous Slide"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-gold"
+              >
+                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next Slide"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-gold"
+              >
+                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
             </div>
 
           </div>
-
         </div>
 
       </div>
