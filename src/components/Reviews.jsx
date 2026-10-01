@@ -26,6 +26,8 @@ const GoogleGIcon = ({ className = "w-5 h-5" }) => (
 
 const Reviews = ({ darkMode = false }) => {
   const [displayScore, setDisplayScore] = useState('0.0');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const scorecardRef = useRef(null);
 
   // Smooth ease-out count-up animation when user scrolls into view
@@ -33,8 +35,9 @@ const Reviews = ({ darkMode = false }) => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
+          setIsAnimating(true);
           const target = googleReviewsSummary.rating;
-          const duration = 1500; // ms
+          const duration = 1400; // ms
           const startTime = performance.now();
 
           const animate = (currentTime) => {
@@ -49,6 +52,8 @@ const Reviews = ({ darkMode = false }) => {
               requestAnimationFrame(animate);
             } else {
               setDisplayScore(target.toFixed(1));
+              setIsAnimating(false);
+              setIsCompleted(true);
             }
           };
 
@@ -99,7 +104,7 @@ const Reviews = ({ darkMode = false }) => {
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
-            {/* Left Score Block with Radiant Animation & Aura */}
+            {/* Left Score Block */}
             <div className="flex items-center gap-5 sm:gap-6">
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white shadow-md border border-gray-100 flex items-center justify-center p-3 shrink-0 relative group">
                 <GoogleGIcon className="w-10 h-10 sm:w-12 sm:h-12 transition-transform duration-300 group-hover:scale-110" />
@@ -107,18 +112,28 @@ const Reviews = ({ darkMode = false }) => {
 
               <div>
                 <div className="flex items-center gap-3 sm:gap-4">
-                  {/* Dynamic Shimmer 4.9 Score with Warm Halo Glow */}
+                  {/* Dynamic Score: Glows while counting up, then stops glowing at 4.9 */}
                   <div className="relative group inline-block">
-                    {/* Ambient Gold Aura */}
-                    <div className="absolute -inset-2 bg-gradient-to-r from-amber-400/35 via-brand-gold/25 to-amber-500/35 rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none animate-pulse"></div>
+                    {/* Ambient Gold Aura - only active while counting, cleanly disappears at 4.9 */}
+                    <div
+                      className={`absolute -inset-2 bg-gradient-to-r from-amber-400/35 via-brand-gold/25 to-amber-500/35 rounded-2xl blur-lg transition-opacity duration-700 pointer-events-none ${
+                        isAnimating ? 'opacity-80 animate-pulse' : 'opacity-0'
+                      }`}
+                    ></div>
 
-                    <span className="relative z-10 font-heading text-5xl sm:text-6xl font-extrabold tracking-tight animate-shimmer-rating select-none drop-shadow-sm inline-block transition-transform duration-300 group-hover:scale-105">
+                    <span
+                      className={`relative z-10 font-heading text-5xl sm:text-6xl font-extrabold tracking-tight select-none inline-block transition-all duration-500 ${
+                        isAnimating
+                          ? 'animate-shimmer-rating scale-105'
+                          : 'text-gray-900 scale-100'
+                      }`}
+                    >
                       {displayScore}
                     </span>
                   </div>
 
                   <div className="flex flex-col">
-                    <div className="flex text-amber-400 animate-star-glow">
+                    <div className={`flex text-amber-400 ${isAnimating ? 'animate-star-glow' : ''}`}>
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="w-5 h-5 sm:w-5 sm:h-5 fill-current transition-transform hover:scale-125 duration-200" />
                       ))}
