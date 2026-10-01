@@ -153,6 +153,45 @@ export const salesProducts = [
     badge: "Factory Roll",
     image: "/images/gallery_batik.jpg",
     description: "Distinctive fine crackle wax-resist dyed fabric roll, available in factory bulk quantities."
+  },
+  {
+    id: "prod-7",
+    title: "Kamdhenu Pichwai & Lotus Block Print Yardage",
+    category: "Traditional Prints",
+    pricePerMeter: 340,
+    unit: "meter",
+    moq: "10 Meters",
+    width: "44 inches",
+    gsm: "80 GSM",
+    badge: "Heritage Craft",
+    image: "/images/client_pichwai_print.jpg",
+    description: "Traditional Pichwai sacred cow motifs with blossoming lotuses and meandering vines printed on regal plum yardage."
+  },
+  {
+    id: "prod-8",
+    title: "Ombre Sunset Floral Hand-Printed Saree",
+    category: "Traditional Prints",
+    pricePerMeter: 1850,
+    unit: "saree",
+    moq: "1 Saree",
+    width: "44 inches",
+    gsm: "65 GSM",
+    badge: "Master Craft",
+    image: "/images/client_artisan_saree_table.jpg",
+    description: "Exclusive peach-to-coral ombre gradation hand-printed saree featuring ornate floral pallu and booti motifs on our workshop table."
+  },
+  {
+    id: "prod-9",
+    title: "Pleated Emerald & Forest Green Shibori Yardage",
+    category: "Traditional Prints",
+    pricePerMeter: 290,
+    unit: "meter",
+    moq: "10 Meters",
+    width: "44 inches",
+    gsm: "75 GSM",
+    badge: "Artisanal Tie-Dye",
+    image: "/images/client_green_shibori.jpg",
+    description: "Hand-pleated and clamped Shibori wave resist dye in rich emerald green with circular bottom border accents."
   }
 ];
 
@@ -244,6 +283,30 @@ export const galleryItems = [
     category: "Batik",
     image: "/images/gallery_batik.jpg",
     description: "Deep indigo and amber gold Batik fabric showing signature fine crackle texture and organic leaf design."
+  },
+  {
+    id: 12,
+    title: "Hand-Pleated Wave Shibori Tie-Dye",
+    serviceId: "shibori",
+    category: "Shibori",
+    image: "/images/client_green_shibori.jpg",
+    description: "Artisanal pleated clamp Shibori pattern with distinct wave linear resists and circular dyed motifs on pure lightweight fabric."
+  },
+  {
+    id: 13,
+    title: "Kamdhenu Cow & Lotus Pichwai Yardage",
+    serviceId: "screen-printing",
+    category: "Screen Printing",
+    image: "/images/client_pichwai_print.jpg",
+    description: "Exquisite Pichwai holy cow, lotus blossoms, and vine prints on deep royal plum fabric yardage from our printing table."
+  },
+  {
+    id: 14,
+    title: "Master Artisan Printing Peach Ombre Saree",
+    serviceId: "screen-printing",
+    category: "Screen Printing",
+    image: "/images/client_artisan_saree_table.jpg",
+    description: "Live workshop capture: Master artisan executing intricate floral gold and pink motifs on a peach ombre saree along our printing table."
   }
 ];
 

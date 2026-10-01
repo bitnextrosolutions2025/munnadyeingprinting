@@ -15,6 +15,17 @@ export const heroSlides = [
     ctaLink: "#sales"
   },
   {
+    id: "slide-artisan-saree-table",
+    image: "/images/client_artisan_saree_table.jpg",
+    alt: "Munna Dyeing Printing - Master artisan printing ombre floral saree at workshop table",
+    eyebrow: "AUTHENTIC WORKSHOP PRODUCTION",
+    titleLine1: "Ombre Sarees.",
+    titleLine2: "Long-Table Artistry.",
+    supportingLine: "Precision Floral Pallu • Gold Accents • Master Artisans • Nizampet Workshop",
+    cta: "Explore Our Fabrics",
+    ctaLink: "#sales"
+  },
+  {
     id: "slide-dyeing-vats",
     image: "/images/craft_dyeing_vats.jpg",
     alt: "Traditional artisan textile dyeing in steaming indigo and saffron vats",

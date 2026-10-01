@@ -47,7 +47,8 @@ export const products = [
     name: "Artisanal Indigo Shibori Patterned Fabric",
     category: "Traditional Prints",
     images: [
-      "/images/gallery_shibori.jpg"
+      "/images/gallery_shibori.jpg",
+      "/images/client_green_shibori.jpg"
     ],
     price: 280,
     priceUnit: "meter",
@@ -67,7 +68,8 @@ export const products = [
     name: "Hand Carved Teak Wooden Block Printed Cotton",
     category: "Traditional Prints",
     images: [
-      "/images/gallery_block_print.jpg"
+      "/images/gallery_block_print.jpg",
+      "/images/client_block_prints.jpg"
     ],
     price: 220,
     priceUnit: "meter",
@@ -118,6 +120,66 @@ export const products = [
     width: "44 inches",
     gsm: "80 GSM",
     badge: "Factory Bulk",
+    featured: true,
+    available: true
+  },
+  {
+    id: "product-007",
+    slug: "kamdhenu-pichwai-lotus-printed-yardage",
+    name: "Kamdhenu Pichwai & Lotus Printed Yardage",
+    category: "Traditional Prints",
+    images: [
+      "/images/client_pichwai_print.jpg"
+    ],
+    price: 340,
+    priceUnit: "meter",
+    showPrice: true,
+    description: "Traditional Pichwai sacred cow motifs with blossoming lotuses and meandering vines printed on regal plum yardage.",
+    fabricType: "Pure Cotton / Silk Blend",
+    moq: "10 meters",
+    width: "44 inches",
+    gsm: "80 GSM",
+    badge: "Heritage Craft",
+    featured: true,
+    available: true
+  },
+  {
+    id: "product-008",
+    slug: "master-artisan-ombre-floral-saree",
+    name: "Master Artisan Ombre Floral Printed Saree",
+    category: "Traditional Prints",
+    images: [
+      "/images/client_artisan_saree_table.jpg"
+    ],
+    price: 1850,
+    priceUnit: "saree",
+    showPrice: true,
+    description: "Exclusive peach-to-coral ombre gradation hand-printed saree featuring ornate floral pallu and booti motifs on our workshop table.",
+    fabricType: "Dyeable Georgette / Kota",
+    moq: "1 Saree",
+    width: "44 inches",
+    gsm: "65 GSM",
+    badge: "Workshop Craft",
+    featured: true,
+    available: true
+  },
+  {
+    id: "product-009",
+    slug: "pleated-emerald-wave-shibori-fabric",
+    name: "Pleated Emerald & Dark Green Shibori Fabric",
+    category: "Traditional Prints",
+    images: [
+      "/images/client_green_shibori.jpg"
+    ],
+    price: 290,
+    priceUnit: "meter",
+    showPrice: true,
+    description: "Hand-pleated and clamped Shibori wave resist dye in rich emerald green with circular bottom border accents.",
+    fabricType: "100% Fine Cotton",
+    moq: "10 meters",
+    width: "44 inches",
+    gsm: "75 GSM",
+    badge: "Artisanal Tie-Dye",
     featured: true,
     available: true
   }
