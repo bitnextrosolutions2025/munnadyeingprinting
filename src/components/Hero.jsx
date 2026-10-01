@@ -105,7 +105,7 @@ const Hero = ({ darkMode = true }) => {
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className="relative w-full h-[420px] min-[380px]:h-[460px] sm:h-[520px] md:h-[580px] lg:h-[640px] xl:h-[700px] overflow-hidden bg-brand-dark"
+        className="relative w-full h-[320px] min-[380px]:h-[350px] sm:h-[400px] md:h-[450px] lg:h-[490px] xl:h-[530px] overflow-hidden bg-brand-dark"
       >
         {heroSlides.map((slide, index) => {
           const isActive = index === currentSlide;
@@ -145,10 +145,10 @@ const Hero = ({ darkMode = true }) => {
 
         {/* Bottom Floating Bar: Slide Indicator, Minimal Separate CTA, and Chevrons */}
         <div className="absolute inset-x-0 bottom-0 z-30 pointer-events-none">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 flex flex-wrap items-center justify-between gap-3">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-4 flex flex-wrap items-center justify-between gap-3">
 
             {/* Left: Slide Counter & Dynamic Progress Bar */}
-            <div className="flex items-center gap-3 sm:gap-4 pointer-events-auto bg-black/50 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-lg">
+            <div className="flex items-center gap-2.5 sm:gap-3.5 pointer-events-auto bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 shadow-md">
               {/* Clickable Slide Pills */}
               <div className="flex items-center gap-1.5">
                 {heroSlides.map((slide, idx) => (
@@ -156,8 +156,8 @@ const Hero = ({ darkMode = true }) => {
                     key={slide.id}
                     onClick={() => goToSlide(idx)}
                     className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide
-                        ? 'w-6 sm:w-8 bg-brand-gold'
-                        : 'w-2 sm:w-2.5 bg-white/40 hover:bg-white/70'
+                        ? 'w-5 sm:w-7 bg-brand-gold'
+                        : 'w-2 bg-white/40 hover:bg-white/70'
                       }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
@@ -165,12 +165,12 @@ const Hero = ({ darkMode = true }) => {
               </div>
 
               {/* 01 / 05 Counter & Progress Bar */}
-              <div className="flex flex-col gap-1 pl-1">
-                <span className="text-[11px] sm:text-xs font-mono font-bold tracking-widest text-brand-gold">
+              <div className="flex flex-col gap-0.5 pl-1">
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-brand-gold">
                   0{currentSlide + 1} <span className="text-white/40">/</span> 0{totalSlides}
                 </span>
                 {/* Animated Progress Bar */}
-                <div className="w-14 sm:w-20 h-0.5 bg-white/25 rounded-full overflow-hidden">
+                <div className="w-12 sm:w-16 h-0.5 bg-white/25 rounded-full overflow-hidden">
                   <div
                     key={progressKey}
                     className={`h-full bg-brand-gold rounded-full animate-hero-progress ${isHovered ? 'paused-animation' : ''
@@ -184,7 +184,7 @@ const Hero = ({ darkMode = true }) => {
             <div className="pointer-events-auto">
               <a
                 href="#sales"
-                className="inline-flex items-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 rounded-full bg-gold-gradient text-brand-dark font-bold text-xs uppercase tracking-wider shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-brand-gold/40 border border-brand-gold/30"
+                className="inline-flex items-center gap-2 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full bg-gold-gradient text-brand-dark font-bold text-xs uppercase tracking-wider shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-brand-gold/40 border border-brand-gold/30"
               >
                 <span>Explore Fabrics</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -192,20 +192,20 @@ const Hero = ({ darkMode = true }) => {
             </div>
 
             {/* Right: Minimal Circular Chevron Buttons */}
-            <div className="flex items-center gap-2 pointer-events-auto">
+            <div className="flex items-center gap-1.5 sm:gap-2 pointer-events-auto">
               <button
                 onClick={handlePrev}
                 aria-label="Previous Slide"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-gold"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-brand-gold"
               >
-                <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNext}
                 aria-label="Next Slide"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-lg focus:outline-none focus:ring-2 focus:ring-brand-gold"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/25 bg-black/50 hover:bg-brand-gold hover:text-brand-dark hover:border-brand-gold text-white flex items-center justify-center transition-all duration-300 backdrop-blur-md shadow-md focus:outline-none focus:ring-2 focus:ring-brand-gold"
               >
-                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
