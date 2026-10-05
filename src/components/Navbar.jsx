@@ -3,7 +3,7 @@ import { Menu, X, MessageSquare } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 import Logo from './Logo';
 
-const Navbar = ({ darkMode = false, onNavigateHome }) => {
+const Navbar = ({ darkMode = false, onNavigateHome, onSelectCategory }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,15 +39,34 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
   const navLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
-    { name: 'Store', href: '#sales' },
+    { name: 'Store', href: '#category=All' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Reviews', href: '#reviews' },
     { name: 'Why Us', href: '#why-us' },
   ];
 
-  const handleHomeClick = (e, href) => {
-    if (href === '#hero' || href === '#sales') {
-      if (onNavigateHome) onNavigateHome();
+  const handleNavLinkClick = (e, link) => {
+    if (link.name === 'Store' || link.href === '#category=All') {
+      e.preventDefault();
+      if (onSelectCategory) {
+        onSelectCategory('All');
+      } else {
+        window.location.hash = '#category=All';
+      }
+      return;
+    }
+
+    if (onNavigateHome) {
+      onNavigateHome(link.href);
+    }
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (onNavigateHome) {
+      onNavigateHome('#hero');
+    } else {
+      window.location.hash = '#hero';
     }
   };
 
@@ -63,7 +82,7 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
           {/* Official Brand Identity: Logo emblem on Left with smooth scale transition */}
           <a 
             href="#hero" 
-            onClick={(e) => handleHomeClick(e, '#hero')} 
+            onClick={handleLogoClick} 
             className={`focus:outline-none shrink-0 origin-left transition-all duration-300 ${
               isScrolled ? 'scale-[0.92] sm:scale-90' : 'scale-100'
             }`}
@@ -80,8 +99,8 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => handleHomeClick(e, link.href)}
-                  className="px-2 lg:px-2.5 py-1.5 text-xs lg:text-sm font-medium transition-colors relative group whitespace-nowrap text-gray-700 hover:text-brand-gold-dark"
+                  onClick={(e) => handleNavLinkClick(e, link)}
+                  className="px-2 lg:px-2.5 py-1.5 text-xs lg:text-sm font-medium transition-colors relative group whitespace-nowrap text-gray-700 hover:text-brand-gold-dark cursor-pointer"
                 >
                   {link.name}
                   <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-brand-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
@@ -103,7 +122,7 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
             {/* Single Prominent Contact Button */}
             <a
               href="#contact"
-              onClick={(e) => handleHomeClick(e, '#contact')}
+              onClick={(e) => handleNavLinkClick(e, { name: 'Contact', href: '#contact' })}
               className={`relative group overflow-hidden rounded-xl font-medium text-brand-dark bg-gold-gradient shadow-md hover:shadow-brand-gold/30 hover:shadow-lg transition-all duration-300 transform active:scale-95 flex items-center justify-center whitespace-nowrap ${
                 isScrolled ? 'px-3.5 lg:px-4.5 py-1.5 lg:py-2 text-xs lg:text-sm' : 'px-4 lg:px-5 py-2 text-xs lg:text-sm'
               }`}
@@ -145,9 +164,9 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
                 href={link.href}
                 onClick={(e) => {
                   setMobileMenuOpen(false);
-                  handleHomeClick(e, link.href);
+                  handleNavLinkClick(e, link);
                 }}
-                className="block px-4 py-2.5 rounded-xl text-base font-medium transition-colors text-gray-800 hover:text-brand-gold-dark hover:bg-white/80"
+                className="block px-4 py-2.5 rounded-xl text-base font-medium transition-colors text-gray-800 hover:text-brand-gold-dark hover:bg-white/80 cursor-pointer"
               >
                 {link.name}
               </a>
@@ -159,7 +178,7 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
                 href="#contact"
                 onClick={(e) => {
                   setMobileMenuOpen(false);
-                  handleHomeClick(e, '#contact');
+                  handleNavLinkClick(e, { name: 'Contact', href: '#contact' });
                 }}
                 className="block w-full py-2.5 text-center rounded-xl font-bold text-sm text-brand-dark bg-gold-gradient shadow-md active:scale-95 transition-transform"
               >

@@ -7,7 +7,7 @@ const Footer = ({ darkMode = true }) => {
   const navLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
-    { name: 'Fabric Store', href: '#sales' },
+    { name: 'Fabric Store', href: '#category=All' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Why Us', href: '#why-us' },
     { name: 'Contact', href: '#contact' },

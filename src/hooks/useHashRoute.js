@@ -53,13 +53,22 @@ export const useHashRoute = () => {
     instantScrollToTop();
   };
 
-  const handleBackToHome = () => {
-    instantScrollToTop();
-    if (window.location.hash !== '' && window.location.hash !== '#hero') {
-      window.history.pushState(null, '', '#hero');
+  const handleBackToHome = (targetHash) => {
+    const hash = targetHash || '#hero';
+    if (window.location.hash !== hash) {
+      window.history.pushState(null, '', hash);
     }
     setActiveCategoryPage(null);
-    instantScrollToTop();
+    if (!targetHash || targetHash === '#hero') {
+      instantScrollToTop();
+    } else {
+      setTimeout(() => {
+        const el = document.querySelector(targetHash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    }
   };
 
   const handleGoBack = () => {
