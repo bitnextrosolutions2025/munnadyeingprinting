@@ -5,13 +5,34 @@ import Logo from './Logo';
 
 const Navbar = ({ darkMode = false, onNavigateHome }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          setIsScrolled(currentScrollY > 20);
+
+          // Calculate scroll progress percentage (0 - 100)
+          const winHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (winHeight > 0) {
+            const progress = Math.min(100, Math.max(0, (currentScrollY / winHeight) * 100));
+            setScrollProgress(progress);
+          } else {
+            setScrollProgress(0);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -31,14 +52,22 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-nav-light py-2.5 sm:py-3 shadow-md border-b border-brand-gold/30' : 'bg-brand-cream/95 backdrop-blur-md py-3 sm:py-3.5 border-b border-brand-gold/20'
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+      isScrolled 
+        ? 'bg-[#fbf9f5]/92 backdrop-blur-xl py-2 sm:py-2.5 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.08),0_4px_12px_rgba(180,130,20,0.12)] border-b border-brand-gold/35' 
+        : 'bg-[#fbf9f5]/80 backdrop-blur-md py-3.5 sm:py-4 border-b border-brand-gold/20 shadow-none'
     }`}>
       <div className="max-w-7xl mx-auto px-3 min-[380px]:px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-3">
           
-          {/* Official Brand Identity: Logo emblem on Left */}
-          <a href="#hero" onClick={(e) => handleHomeClick(e, '#hero')} className="focus:outline-none shrink-0">
+          {/* Official Brand Identity: Logo emblem on Left with smooth scale transition */}
+          <a 
+            href="#hero" 
+            onClick={(e) => handleHomeClick(e, '#hero')} 
+            className={`focus:outline-none shrink-0 origin-left transition-all duration-300 ${
+              isScrolled ? 'scale-[0.92] sm:scale-90' : 'scale-100'
+            }`}
+          >
             <Logo darkMode={false} size="md" showLogo={true} />
           </a>
 
@@ -75,7 +104,9 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
             <a
               href="#contact"
               onClick={(e) => handleHomeClick(e, '#contact')}
-              className="relative group overflow-hidden px-4 lg:px-5 py-2 rounded-xl font-medium text-xs lg:text-sm text-brand-dark bg-gold-gradient shadow-md hover:shadow-brand-gold/20 hover:shadow-lg transition-all duration-300 transform active:scale-95 flex items-center justify-center whitespace-nowrap"
+              className={`relative group overflow-hidden rounded-xl font-medium text-brand-dark bg-gold-gradient shadow-md hover:shadow-brand-gold/30 hover:shadow-lg transition-all duration-300 transform active:scale-95 flex items-center justify-center whitespace-nowrap ${
+                isScrolled ? 'px-3.5 lg:px-4.5 py-1.5 lg:py-2 text-xs lg:text-sm' : 'px-4 lg:px-5 py-2 text-xs lg:text-sm'
+              }`}
             >
               <span className="relative z-10 font-bold tracking-wide">Contact Us</span>
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
@@ -94,6 +125,14 @@ const Navbar = ({ darkMode = false, onNavigateHome }) => {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Luxury Golden Scroll Progress Indicator Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-brand-gold/15 overflow-hidden pointer-events-none">
+        <div 
+          className="h-full bg-gradient-to-r from-amber-500 via-brand-gold to-amber-600 shadow-[0_0_10px_rgba(212,175,55,0.8)] transition-[width] duration-150 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
       </div>
 
       {/* Clean Mobile Drawer Menu */}
